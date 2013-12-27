@@ -33,16 +33,17 @@ for($i=$npastdays;$i>=0;$i--) {
       $readings = file($inputfile);
       foreach($readings as $line) {
          $temp_array=explode(" ",$line);
-         $date=explode("-",$temp_array[$dateindex]);
+         $date=explode("-",$temp_array[$dateindex[$logfiletemplate]]);
          $year=$date[0];
          $month=$date[1]-1;
          $day=$date[2];
-         $time=explode(":",$temp_array[$timeindex]);
-         $address=$temp_array[$addressindex];
+         $time=explode(":",$temp_array[$timeindex[$logfiletemplate]]);
+         $address=$temp_array[$addressindex[$logfiletemplate]];
+         $measurement=$temp_array[$tempindex[$logfiletemplate]];
          if(array_search($address,$addresses,true)!==false) {
            echo "[new Date($year,$month,$day,$time[0],$time[1],0)";
            foreach($addresses as $theaddress) {
-             if($address==$theaddress) { echo ",$temp_array[$tempindex]+$offset[$theaddress]"; }
+             if($address==$theaddress) { $corrmeas=$measurement+$offset[$theaddress]; echo ",$corrmeas"; }
              else { echo ",null"; }
            }
            echo "],";
