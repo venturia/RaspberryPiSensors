@@ -1,0 +1,43 @@
+Eseguire:
+
+  sudo ./install.sh <nome luogo>
+
+ per copiare i files php e html nella directory del web server e definire i link files.
+
+Inserire con:
+
+ crontab -e
+
+ queste linee (a seconda dei sensori a disposizione e degli indirizzi i2c dei sensori DS1621):
+
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/prova_termometro.py -a 0x4f -a 0x4b>> log_termometro$
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/temperatura_cpu.sh >> log_cputemperature_$(date +"\%$
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/BMP085_read.py >> log_bmp085_$(date +"\%F").out 2>&1
+
+ e con:
+
+ sudo crontab -e
+
+ questa linea:
+
+1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/sensors/scripts/SHT15_read.py >> /home/pi/log_sht15_$(date +"\%F").o$
+
+ se il sensore SHT15 e' disponibile
+
+
+Pacchetti richiesti (da completare):
+
+ da installare con "sudo apt-get install"
+
+    i2c-tools
+    ...?
+
+ librerie python per sensori
+
+   SHT15: https://pypi.python.org/pypi/rpiSht1x
+          da decomprimere nella home directory e poi eseguire "sudo python setup.py install"
+
+   BMP085: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
+          da scaricare nella directory /home/pi . DA MIGLIORARE L"INSTALLAZIONE
+
+
