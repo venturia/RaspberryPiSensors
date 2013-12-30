@@ -10,8 +10,8 @@ Inserire con:
 
  queste linee (a seconda dei sensori a disposizione e degli indirizzi i2c dei sensori DS1621):
 
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/prova_termometro.py -a 0x4f -a 0x4b>> log_termometro$
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/temperatura_cpu.sh >> log_cputemperature_$(date +"\%$
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/prova_termometro.py -a 0x4f -a 0x4b>> log_termometro_$(date +"\%F").out 2>&1
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/temperatura_cpu.sh >> log_cputemperature_$(date +"\%F").out 2>&1
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/BMP085_read.py >> log_bmp085_$(date +"\%F").out 2>&1
 
  e con:
@@ -20,7 +20,7 @@ Inserire con:
 
  questa linea:
 
-1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/sensors/scripts/SHT15_read.py >> /home/pi/log_sht15_$(date +"\%F").o$
+1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/sensors/scripts/SHT15_read.py >> /home/pi/log_sht15_$(date +"\%F").out 2>&1
 
  se il sensore SHT15 e' disponibile
 
@@ -30,6 +30,7 @@ Pacchetti richiesti (da completare):
  da installare con "sudo apt-get install"
 
     i2c-tools
+    python-smbus
     ...?
 
  librerie python per sensori
@@ -40,4 +41,14 @@ Pacchetti richiesti (da completare):
    BMP085: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
           da scaricare nella directory /home/pi . DA MIGLIORARE L"INSTALLAZIONE
 
+
+Preparazione ambiente i2c
+
+ seguire le istruzioni descritte in questo link: http://www.instructables.com/id/Raspberry-Pi-I2C-Python/
+
+   commentare la linea "blacklist i2c-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf 
+   aggiungere la linea "i2c-dev" in /etc/modules
+   aggiungere "pi" al gruppo "i2c" con "sudo adduser pi i2c"
+   reboot
+   verificare indirizzi device i2c con "i2cdetect -y 1"
 
