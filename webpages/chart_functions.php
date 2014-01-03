@@ -1,7 +1,7 @@
 <?php
   function print_chart_div($suffix,$plotwidth,$plotheight,$npastdays)  {
 
-    echo '<div id="chart',${suffix},'_div" style="width:',$plotwidth,' height:',$plotheight,'"></div>';
+    echo '<div id="chart',$suffix,'_div" style="width:',$plotwidth,' height:',$plotheight,'"></div>';
     echo 'Numero di giorni <input type="number" value="',$npastdays,'" name="ndays',$suffix,'" size="3" min="0" max="99">';
     echo '<input type="submit" value="Invia"> ';
 
@@ -21,8 +21,10 @@
       echo "data",$suffix,".addRows([";
 
 $npastdays=3;
-if ($_GET["ndays${suffix}"] != "") {
-   $npastdays=$_GET["ndays${suffix}"];
+if (isset($_GET["ndays${suffix}"])) {
+  if ($_GET["ndays${suffix}"] != "") {
+     $npastdays=$_GET["ndays${suffix}"];
+  }
 } 
 $now=mktime();
 for($i=$npastdays;$i>=0;$i--) {
