@@ -13,6 +13,8 @@ Inserire con:
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/prova_termometro.py -a 0x4f -a 0x4b>> log_termometro_$(date +"\%F").out 2>&1
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/temperatura_cpu.sh >> log_cputemperature_$(date +"\%F").out 2>&1
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/BMP085_read.py >> log_bmp085_$(date +"\%F").out 2>&1
+1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/RaspberryPiSensors/scripts/DS18b20_read.sh >> log_DS18b20_$(date +"\%F").out 2>&1
+
 
  e con:
 
@@ -52,3 +54,15 @@ Preparazione ambiente i2c
    reboot
    verificare indirizzi device i2c con "i2cdetect -y 1"
 
+Preparazione ambiente 1-wire (per DS18b20)
+
+   aggiungere la linea "w1-gpio" in /etc/modules
+   aggiungere la linea "w1-therm" in /etc/modules
+
+
+Connessioni sensori
+
+   I sensori 1-wire, ad esempio DS18b20 devono essere collegati alla porta GPIO 4 con la resistenza di pull-up di 4.7k
+   I sensori I2C devono essere collegati alle porte SCL e SDA del connettore GPIO
+   Il sensore SHT15 deve essere collegato al pin 7 per il clock (in conflitto con 1-wire visto che corrisponde a GPIO 4) e al pin 11 per i dati. 
+      Possono essere modificati modificando lo script
