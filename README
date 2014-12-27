@@ -60,9 +60,17 @@ Preparazione ambiente 1-wire (per DS18b20)
    aggiungere la linea "w1-therm" in /etc/modules
 
 
+Preparazione ambiente SPI
+
+   commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf 
+   installare python-dev con "sudo apt-get install python-dev"
+   scaricare py-spidev con "git clone git://github.com/doceme/py-spidev"
+   dalla directory py-spidev eseguire "sudo python setup.py install"
+
 Connessioni sensori
 
    I sensori 1-wire, ad esempio DS18b20 devono essere collegati alla porta GPIO 4 con la resistenza di pull-up di 4.7k
+   Per il sensore DS18b20 sigillato il codice dei colori dei cavi e': rosso = +Vcc, giallo = GND, verde = data
    I sensori I2C devono essere collegati alle porte SCL e SDA del connettore GPIO
    Il sensore SHT15 deve essere collegato al pin 7 per il clock (in conflitto con 1-wire visto che corrisponde a GPIO 4) e al pin 11 per i dati. 
       Possono essere modificati modificando lo script
