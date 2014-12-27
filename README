@@ -60,6 +60,13 @@ Preparazione ambiente 1-wire (per DS18b20)
    aggiungere la linea "w1-therm" in /etc/modules
 
 
+Preparazione ambiente SPI
+
+   commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf 
+   installare python-dev con "sudo apt-get install python-dev"
+   scaricare py-spidev con "git clone git://github.com/doceme/py-spidev"
+   dalla directory py-spidev eseguire "sudo python setup.py install"
+
 Connessioni sensori
 
    I sensori 1-wire, ad esempio DS18b20 devono essere collegati alla porta GPIO 4 con la resistenza di pull-up di 4.7k
