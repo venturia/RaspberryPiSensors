@@ -33,8 +33,10 @@ def which_channel():
 def get_adc(channel):                                   # read SPI data from MCP3002 chip
     if ((channel > 1) or (channel < 0)):                # Only 2 channels 0 and 1 else return -1
         return -1
-    r = spi.xfer2([1,(2+channel)<<6,0])  # these two lines are explained in more detail at the bottom
-    ret = ((r[1]&31) << 6) + (r[2] >> 2)
+#    r = spi.xfer2([1,(2+channel)<<6,0])  # these two lines are explained in more detail at the bottom
+#    ret = ((r[1]&31) << 6) + (r[2] >> 2)
+    r = spi.xfer2([12+2*channel,0,0])  # these two lines are explained in more detail at the bottom
+    ret = ((r[1]&255) << 3) + (r[2] >> 5)
     return ret 
 
 def display(char, reps, adc_value, spaces):        # function handles the display of ##### 
@@ -46,7 +48,7 @@ trim = 22
 niters = 200
 iterations = 0             # initial value for iteration counter
 char = '#'                 # define the bar chart character
-channel = 0                # set channel to 3 initially so it will ask for user input (must be 0 or 1)
+channel = 1                # set channel to 3 initially so it will ask for user input (must be 0 or 1)
 
 while not (channel == 1 or channel == 0):       # continue asking until answer 0 or 1 given
     channel = int(which_channel())              # once proper answer given, carry on
@@ -65,12 +67,13 @@ while iterations < niters:
     sleep(0.00025)       # need a delay so people using ssh don't get slow response
     iterations += 1   # limits length of program running to 30s [600 * 0.05]
 
-#iters= 0
-#while iters < niters:
-#    print (adc_values[iters])
-#    iters += 1
+iters= 0
+while iters < niters:
+    print (adc_values[iters])
+    iters += 1
 
 adc_values.sort()
+print(adc_values[niters-1-trim]-adc_values[trim],(adc_values[niters-1-trim]+adc_values[trim])/2,adc_values[niters-1-trim],adc_values[trim])
 curr_eff = (adc_values[niters-1-trim]-adc_values[trim])*vmax/1023*30/2/math.sqrt(2)
 #print datetime.datetime.now(), " SCT13_curreff {:.2f} A".format(curr_eff)
 print (datetime.datetime.now(), " SCT13_curreff {:.2f} A".format(curr_eff))
