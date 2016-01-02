@@ -46,7 +46,7 @@ trim = 22
 niters = 200
 iterations = 0             # initial value for iteration counter
 char = '#'                 # define the bar chart character
-channel = 0                # set channel to 3 initially so it will ask for user input (must be 0 or 1)
+channel = 1                # set channel to 3 initially so it will ask for user input (must be 0 or 1)
 
 while not (channel == 1 or channel == 0):       # continue asking until answer 0 or 1 given
     channel = int(which_channel())              # once proper answer given, carry on
