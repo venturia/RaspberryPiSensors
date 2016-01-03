@@ -58,6 +58,7 @@ Preparazione ambiente 1-wire (per DS18b20)
 
    aggiungere la linea "w1-gpio" in /etc/modules
    aggiungere la linea "w1-therm" in /etc/modules
+   Se questo non e' sufficiente, occorre aggiungere la linea "dtoverlay=w1-gpio" al file /boot/config.txt
 
 
 Preparazione ambiente SPI
