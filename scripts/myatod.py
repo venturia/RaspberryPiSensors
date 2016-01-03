@@ -11,11 +11,12 @@
 from __future__ import print_function       
 from time import sleep
 
+# DO NOT !!
 # reload spi drivers to prevent spi failures
-import subprocess
-unload_spi = subprocess.Popen('sudo rmmod spi_bcm2708', shell=True, stdout=subprocess.PIPE)
-start_spi = subprocess.Popen('sudo modprobe spi_bcm2708', shell=True, stdout=subprocess.PIPE)
-sleep(3)
+#import subprocess
+#unload_spi = subprocess.Popen('sudo rmmod spi_bcm2708', shell=True, stdout=subprocess.PIPE)
+#start_spi = subprocess.Popen('sudo modprobe spi_bcm2708', shell=True, stdout=subprocess.PIPE)
+#sleep(3)
 
 import time
 import datetime
