@@ -14,7 +14,7 @@ Inserire con:
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/temperatura_cpu.sh >> log_cputemperature_$(date +"\%F").out 2>&1
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /home/pi/sensors/scripts/BMP085_read.py >> log_bmp085_$(date +"\%F").out 2>&1
 1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/RaspberryPiSensors/scripts/DS18b20_read.sh >> log_DS18b20_$(date +"\%F").out 2>&1
-
+* * * * * /home/pi/RaspberryPiSensors/scripts/myatod.py >> log_sct13_$(date +"\%F").out 2>&1
 
  e con:
 
@@ -63,7 +63,8 @@ Preparazione ambiente 1-wire (per DS18b20)
 
 Preparazione ambiente SPI
 
-   commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf 
+   commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf
+   aggiungere la linea "dtparam=spi=on" in /boot/config.txt (se SPI non parte da solo senza)
    installare python-dev con "sudo apt-get install python-dev"
    scaricare py-spidev con "git clone git://github.com/doceme/py-spidev"
    dalla directory py-spidev eseguire "sudo python setup.py install"
