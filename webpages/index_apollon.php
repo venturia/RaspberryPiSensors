@@ -27,13 +27,16 @@ $plotheight=400;
 require('temperature_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
-require('dewpoint_params.php');
-load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
+//require('dewpoint_params.php');
+//load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
 require('pressure_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
-require('humidity_params.php');
+//require('humidity_params.php');
+//load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
+
+require('adslspeed_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
 require('cputemp_params.php');
@@ -49,8 +52,9 @@ load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addre
 
     <?php print_chart_div("temperature",$plotwidth,$plotheight,$npastdays['temperature']); ?>
     <?php print_chart_div("pressure",$plotwidth,$plotheight,$npastdays['pressure']); ?>
-    <?php print_chart_div("humidity",$plotwidth,$plotheight,$npastdays['humidity']); ?>
-    <?php print_chart_div("dewpoint",$plotwidth,$plotheight,$npastdays['dewpoint']); ?>
+    <?php print_chart_div("adslspeed",$plotwidth,$plotheight,$npastdays['adslspeed']); ?>
+    <?php /* print_chart_div("humidity",$plotwidth,$plotheight,$npastdays['humidity']); */ ?>
+    <?php /* print_chart_div("dewpoint",$plotwidth,$plotheight,$npastdays['dewpoint']); */ ?>
     <?php print_chart_div("cputemp",$plotwidth,$plotheight,$npastdays['cputemp']); ?>
 
    </form>
