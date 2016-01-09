@@ -1,0 +1,9 @@
+[user]
+	github = venturia
+	name = Andrea Venturi
+	email = andrea.venturi@cern.ch
+[color]
+	ui = true
+[alias]
+	l = log --graph --all --abbrev-commit --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(green)%ar %C(yellow)%an%C(bold yellow)%d%C(reset)%n %C(white)%s%n'
+

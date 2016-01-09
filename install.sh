@@ -4,6 +4,12 @@ WEBDIR=/var/www
 
 # copy the web pages in the web server subdirectory "temperature"
 
+if [ ! -d "${WEBDIR}/temperature" ]
+then
+  echo "creating ${WEBDIR}/temperature directory"
+  mkdir ${WEBDIR}/temperature
+fi
+
 echo "copying php scripts"
 cp -v webpages/*.php ${WEBDIR}/temperature/.
 echo "copying html files"
