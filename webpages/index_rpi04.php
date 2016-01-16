@@ -3,6 +3,7 @@ include 'chart_functions.php';
 ?>
 
 <html>
+  <meta name = "viewport" content = "width = device-width">
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
