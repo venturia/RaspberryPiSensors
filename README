@@ -33,6 +33,7 @@ Pacchetti richiesti (da completare):
 
     i2c-tools
     python-smbus
+    php5
     ...?
 
  librerie python per sensori
