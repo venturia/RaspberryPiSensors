@@ -64,11 +64,12 @@ Preparazione ambiente 1-wire (per DS18b20)
 
 Preparazione ambiente SPI
 
-   commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf
-   aggiungere la linea "dtparam=spi=on" in /boot/config.txt (se SPI non parte da solo senza)
-   installare python-dev con "sudo apt-get install python-dev"
-   scaricare py-spidev con "git clone git://github.com/doceme/py-spidev"
-   dalla directory py-spidev eseguire "sudo python setup.py install"
+   1) commentare la linea "blacklist spi-bcm2708" in /etc/modprobe.d/raspi-blacklist.conf
+   2) aggiungere la linea "dtparam=spi=on" in /boot/config.txt (se SPI non parte da solo senza)
+   1+2) oppure utilizzare raspi-config per abilitare SPI nelle "Advanced Options"
+   3) installare python-dev con "sudo apt-get install python-dev"
+   4) scaricare py-spidev con "git clone git://github.com/doceme/py-spidev"
+   5) dalla directory py-spidev eseguire "sudo python setup.py install"
 
 Connessioni sensori
 
