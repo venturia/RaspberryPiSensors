@@ -26,6 +26,10 @@ $plotheight=400;
 <?php
 require('temperature_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
+
+require('current_params.php');
+load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
+
 ?>
 
     </script>
@@ -36,6 +40,8 @@ load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addre
     <form action="<?php echo $phpfilename?>" method="get">
 
     <?php print_chart_div("temperature",$plotwidth,$plotheight,$npastdays['temperature']); ?>
+    <?php print_chart_div("current",$plotwidth,$plotheight,$npastdays['current']); ?>
+
    </form>
   </body>
 </html>
