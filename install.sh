@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WEBDIR=/var/www
+WEBDIR=/var/www/html
 
 # copy the web pages in the web server subdirectory "temperature"
 
