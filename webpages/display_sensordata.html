@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+      // Set a callback to run when the Google Visualization API is loaded.
+      // google.charts.setOnLoadCallback(drawSensorData);
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawSensorData() {
+          var checkboxes=document.getElementById("sensor_div").children;
+          sensors="";
+          for(var i = 0; i < checkboxes.length; i++) {
+             if(checkboxes[i].checked) {sensors += "&"+checkboxes[i].value;}
+          }
+          var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime').value+"&endtime="+document.getElementById('endtime').value);
+          query.send(handleQueryResponse);
+      }
+      function handleQueryResponse(response) {
+          var data = response.getDataTable();
+          var visualization = new google.visualization.ScatterChart(document.getElementById('sensordata_div'));
+          visualization.draw(data,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400});
+      }
+      function timerange() {
+         var timenow= new Date();
+         var timebefore = new Date();
+         timebefore.setDate(timenow.getDate()-3);
+         var month = timenow.getMonth()+1;
+         var monthbefore = timebefore.getMonth()+1;
+         var timenowstring = timenow.getFullYear()+"-"+month+"-"+timenow.getDate()+" "+timenow.getHours()+":"+timenow.getMinutes()+":"+timenow.getSeconds();
+         var timebeforestring = timebefore.getFullYear()+"-"+monthbefore+"-"+timebefore.getDate()+" "+timebefore.getHours()+":"+timebefore.getMinutes()+":"+timebefore.getSeconds();
+         document.getElementById('timerange_div').innerHTML=
+         "Start time: <input type=text id=starttime value='"+timebeforestring+
+         "' placeholder='YYYY-MM-DD HH:MM:SS'> End time: <input type=text id=endtime value='"+timenowstring+"' placeholder='YYYY-MM-DD HH:MM:SS'>";
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="sensordata_div"></div>
+    <div id="timerange_div"></div><br>
+    <script>timerange()</script>
+    <div id="sensor_div">
+    <input type="checkbox" id="sensor0" value="logtemplate=log_termometro_&sensor=0x4d&label=DS1621 sgabuzzino&unit=C&offset=3">DS1621 Sgabuzzino</input>
+    <input type="checkbox" id="sensor1" value="logtemplate=log_DS18b20_&sensor=28-000005958097&label=temperatura sgabuzzino&unit=C&offset=1">Temperatura Sgabuzzino</input>
+    <input type="checkbox" id="sensor2" value="logtemplate=log_sct13_&sensor=SCT13_curreff&label=Corrente&unit=A&offset=1">Corrente</input>
+    </div>
+    <br>
+    <button onclick="drawSensorData()">Invia</button><br>
+  </body>
+</html>
+

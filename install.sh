@@ -1,6 +1,16 @@
 #!/bin/bash
 
 WEBDIR=/var/www/html
+CGIDIR=/usr/lib/cgi-bin
+
+read -p "web server file directory [$WEBDIR]" chosenwebdir
+
+if [ ${#chosenwebdir} != 0 ]; then
+  WEBDIR=$chosenwebdir
+fi
+
+echo "Web page file directory $WEBDIR"
+echo "Web script file directory $CGIDIR"
 
 # copy the web pages in the web server subdirectory "temperature"
 
@@ -14,6 +24,8 @@ echo "copying php scripts"
 cp -v webpages/*.php ${WEBDIR}/temperature/.
 echo "copying html files"
 cp -v webpages/*.html ${WEBDIR}/temperature/.
+echo "copying py files"
+cp -v webpages/*.html ${CGIDIR}/temperature/.
 
 # define the logical links of index.php and temperature_params.php
 
