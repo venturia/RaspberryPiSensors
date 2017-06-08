@@ -18,6 +18,7 @@
           }
           var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime').value+"&endtime="+document.getElementById('endtime').value);
           query.send(handleQueryResponse);
+          timerange();
       }
       function handleQueryResponse(response) {
           var data = response.getDataTable();
