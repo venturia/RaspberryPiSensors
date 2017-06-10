@@ -6,39 +6,50 @@
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
       // Set a callback to run when the Google Visualization API is loaded.
-      // google.charts.setOnLoadCallback(drawSensorData);
+      // google.charts.setOnLoadCallback(prepareDrawingAreasDefault);
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-      function sensorlist() {
+      function prepareDrawingAreas(nareas) {
+         var areasstring = "";
+         for(var iarea = 0; iarea < nareas; iarea++) {
+            areasstring = areasstring + "<div id='sensordata"+iarea+"_div'></div> <div id='timerange"+iarea+"_div'></div><br> <div id='sensorlist"+iarea+"_div'></div> <br> <button onclick='drawSensorData("+iarea+")'>Invia</button><br>";
+         }
+         document.getElementById("sensorplots_div").innerHTML = areasstring;
+         for(var iarea = 0;iarea < nareas; iarea++) {
+            timerange(iarea);
+            sensorlist(iarea);
+         }
+         for(var iarea = 0;iarea < nareas; iarea++) {
+            drawSensorData(iarea);
+         }
+      }
+      function sensorlist(id) {
           var xmlhttp = new XMLHttpRequest();
           xmlhttp.onreadystatechange = function() {
                if(xmlhttp.readyState == 1) {
-                  document.getElementById("sensorlist_div").innerHTML = "Attendere";
+                  document.getElementById("sensorlist"+id+"_div").innerHTML = "Attendere";
                }
                if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                  document.getElementById("sensorlist_div").innerHTML = xmlhttp.responseText;
+                  document.getElementById("sensorlist"+id+"_div").innerHTML = xmlhttp.responseText;
                }
           }
-          xmlhttp.open("GET","/cgi-bin/temperature/sensorlist.py",true);
+          xmlhttp.open("GET","/cgi-bin/temperature/sensorlist.py?id="+id,false);
           xmlhttp.send();
       }
-      function drawSensorData() {
-          var checkboxes=document.getElementById("sensorlist_div").children;
-          sensors="";
+      function drawSensorData(id) {
+          var checkboxes=document.getElementById("sensorlist"+id+"_div").children;
+          var sensors="";
           for(var i = 0; i < checkboxes.length; i++) {
              if(checkboxes[i].checked) {sensors += "&"+checkboxes[i].value;}
           }
-          var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime').value+"&endtime="+document.getElementById('endtime').value);
-          query.send(handleQueryResponse);
-          timerange();
+          var container = document.getElementById('sensordata'+id+'_div');
+          var visualization = new google.visualization.ScatterChart(container);
+          var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime'+id).value+"&endtime="+document.getElementById('endtime'+id).value);
+          var queryWrapper = new google.visualization.QueryWrapper(query,visualization,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400},container);
+          queryWrapper.sendAndDraw();
       }
-      function handleQueryResponse(response) {
-          var data = response.getDataTable();
-          var visualization = new google.visualization.ScatterChart(document.getElementById('sensordata_div'));
-          visualization.draw(data,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400});
-      }
-      function timerange() {
+      function timerange(id) {
          var timenow= new Date();
          var timebefore = new Date();
          timebefore.setDate(timenow.getDate()-3);
@@ -46,21 +57,16 @@
          var monthbefore = timebefore.getMonth()+1;
          var timenowstring = timenow.getFullYear()+"-"+month+"-"+timenow.getDate()+" "+timenow.getHours()+":"+timenow.getMinutes()+":"+timenow.getSeconds();
          var timebeforestring = timebefore.getFullYear()+"-"+monthbefore+"-"+timebefore.getDate()+" "+timebefore.getHours()+":"+timebefore.getMinutes()+":"+timebefore.getSeconds();
-         document.getElementById('timerange_div').innerHTML=
-         "Start time: <input type=text id=starttime value='"+timebeforestring+
-         "' placeholder='YYYY-MM-DD HH:MM:SS'> End time: <input type=text id=endtime value='"+timenowstring+"' placeholder='YYYY-MM-DD HH:MM:SS'>";
+         document.getElementById('timerange'+id+'_div').innerHTML=
+         "Start time: <input type=text id=starttime"+id+" value='"+timebeforestring+
+         "' placeholder='YYYY-MM-DD HH:MM:SS'> End time: <input type=text id=endtime"+id+" value='"+timenowstring+"' placeholder='YYYY-MM-DD HH:MM:SS'>";
       }
     </script>
   </head>
 
   <body>
-    <div id="sensordata_div"></div>
-    <div id="timerange_div"></div><br>
-    <div id="sensorlist_div"></div>
-    <script>timerange()</script>
-    <script>sensorlist()</script>
-    <br>
-    <button onclick="drawSensorData()">Invia</button><br>
+    <input type=text value=2 id=nareas> <button onclick="prepareDrawingAreas(document.getElementById('nareas').value)">Invia</button>
+    <div id="sensorplots_div"></div>
   </body>
 </html>
 
