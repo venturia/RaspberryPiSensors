@@ -10,8 +10,21 @@
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
+      function sensorlist() {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+               if(xmlhttp.readyState == 1) {
+                  document.getElementById("sensorlist_div").innerHTML = "Attendere";
+               }
+               if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  document.getElementById("sensorlist_div").innerHTML = xmlhttp.responseText;
+               }
+          }
+          xmlhttp.open("GET","/cgi-bin/temperature/sensorlist.py",true);
+          xmlhttp.send();
+      }
       function drawSensorData() {
-          var checkboxes=document.getElementById("sensor_div").children;
+          var checkboxes=document.getElementById("sensorlist_div").children;
           sensors="";
           for(var i = 0; i < checkboxes.length; i++) {
              if(checkboxes[i].checked) {sensors += "&"+checkboxes[i].value;}
@@ -43,12 +56,9 @@
   <body>
     <div id="sensordata_div"></div>
     <div id="timerange_div"></div><br>
+    <div id="sensorlist_div"></div>
     <script>timerange()</script>
-    <div id="sensor_div">
-    <input type="checkbox" id="sensor0" value="logtemplate=log_termometro_&sensor=0x4d&label=DS1621 sgabuzzino&unit=C&offset=3">DS1621 Sgabuzzino</input>
-    <input type="checkbox" id="sensor1" value="logtemplate=log_DS18b20_&sensor=28-000005958097&label=temperatura sgabuzzino&unit=C&offset=1">Temperatura Sgabuzzino</input>
-    <input type="checkbox" id="sensor2" value="logtemplate=log_sct13_&sensor=SCT13_curreff&label=Corrente&unit=A&offset=1">Corrente</input>
-    </div>
+    <script>sensorlist()</script>
     <br>
     <button onclick="drawSensorData()">Invia</button><br>
   </body>
