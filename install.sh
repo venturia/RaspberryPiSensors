@@ -25,7 +25,8 @@ cp -v webpages/*.php ${WEBDIR}/temperature/.
 echo "copying html files"
 cp -v webpages/*.html ${WEBDIR}/temperature/.
 echo "copying py files"
-cp -v webpages/*.html ${CGIDIR}/temperature/.
+cp -v webpages/*.py ${CGIDIR}/temperature/.
+chmod -v +x ${CGIDIR}/temperature/*.py
 
 # define the logical links of index.php and temperature_params.php
 
