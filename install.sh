@@ -19,6 +19,11 @@ then
   echo "creating ${WEBDIR}/temperature directory"
   mkdir ${WEBDIR}/temperature
 fi
+if [ ! -d "${CGIDIR}/temperature" ]
+then
+  echo "creating ${CGIDIR}/temperature directory"
+  mkdir ${CGIDIR}/temperature
+fi
 
 echo "copying php scripts"
 cp -v webpages/*.php ${WEBDIR}/temperature/.
