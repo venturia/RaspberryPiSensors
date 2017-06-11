@@ -29,6 +29,8 @@ Inserire con:
 
 Pacchetti richiesti (da completare):
 
+Richiede l'installazione del pacchetto `https://github.com/google/google-visualization-python`
+
  da installare con "sudo apt-get install"
 
     i2c-tools
