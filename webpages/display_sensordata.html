@@ -29,13 +29,37 @@
             areasstring = areasstring + "<div id='sensordata"+iarea+"_div'></div> <div id='timerange"+iarea+"_div'></div><br> <div id='sensorlist"+iarea+"_div'></div> <br> <button onclick='drawSensorData("+iarea+")'>Invia</button><br>";
          }
          document.getElementById("sensorplots_div").innerHTML = areasstring;
-         for(var iarea = 0;iarea < nareas; iarea++) {
-            timerange(iarea);
-            sensorlist(iarea);
-         }
+         timerange(nareas);
+         sensorlistXML(nareas);
+//         for(var iarea = 0;iarea < nareas; iarea++) {
+//            sensorlist(iarea);
+//         }
          for(var iarea = 0;iarea < nareas; iarea++) {
             drawSensorData(iarea);
          }
+      }
+      function sensorlistXML(nareas) {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+               if(xmlhttp.readyState == 1) {
+                  for(var id=0;id<nareas;id++) {
+                    document.getElementById("sensorlist"+id+"_div").innerHTML = "Attendere";
+                  }
+               }
+               if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  var xmlresponse = xmlhttp.responseXML;
+                  for(var id=0;id<nareas;id++) {
+                     var x = xmlresponse.getElementsByTagName("AREA"+id);
+                     if( x.length == 1) {
+                        document.getElementById("sensorlist"+id+"_div").innerHTML = x[0].innerHTML;
+                     } else {
+                        document.getElementById("sensorlist"+id+"_div").innerHTML = "Problema! "+x.length;
+                     }
+                  }
+               }
+          }
+          xmlhttp.open("GET","/cgi-bin/temperature/sensorlistXML.py?nareas="+nareas,false);
+          xmlhttp.send();
       }
       function sensorlist(id) {
           var xmlhttp = new XMLHttpRequest();
@@ -64,7 +88,7 @@
             queryWrapper.sendAndDraw();
           }
       }
-      function timerange(id) {
+      function timerange(nareas) {
          var timenow= new Date();
          var timebefore = new Date();
          timebefore.setDate(timenow.getDate()-3);
@@ -72,9 +96,11 @@
          var monthbefore = timebefore.getMonth()+1;
          var timenowstring = timenow.getFullYear()+"-"+month+"-"+timenow.getDate()+" "+timenow.getHours()+":"+timenow.getMinutes()+":"+timenow.getSeconds();
          var timebeforestring = timebefore.getFullYear()+"-"+monthbefore+"-"+timebefore.getDate()+" "+timebefore.getHours()+":"+timebefore.getMinutes()+":"+timebefore.getSeconds();
-         document.getElementById('timerange'+id+'_div').innerHTML=
-         "Start time: <input type=text size=20 id=starttime"+id+" value='"+timebeforestring+
-         "' placeholder='YYYY-MM-DD HH:MM:SS'> End time: <input type=text size=20 id=endtime"+id+" value='"+timenowstring+"' placeholder='YYYY-MM-DD HH:MM:SS'>";
+         for (var id=0; id < nareas ; id++) {
+           document.getElementById('timerange'+id+'_div').innerHTML=
+           "Start time: <input type=text size=20 id=starttime"+id+" value='"+timebeforestring+
+           "' placeholder='YYYY-MM-DD HH:MM:SS'> End time: <input type=text size=20 id=endtime"+id+" value='"+timenowstring+"' placeholder='YYYY-MM-DD HH:MM:SS'>";
+         }
       }
     </script>
   </head>
