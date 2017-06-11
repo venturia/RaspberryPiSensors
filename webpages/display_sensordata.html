@@ -12,7 +12,14 @@
       // instantiates the pie chart, passes in the data and
       // draws it.
       function prepareDrawingAreasDefault() {
-         prepareDrawingAreas(2);
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+               if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  prepareDrawingAreas(xmlhttp.responseText);
+               }
+          }
+          xmlhttp.open("GET","/cgi-bin/temperature/nareas.py",false);
+          xmlhttp.send();
       }
       function prepareDrawingAreas(nareas) {
          var nareasstring = "Numero di grafici <input type=text size=4 value="+nareas+" id=nareas> <button onclick=\"prepareDrawingAreas(document.getElementById('nareas').value)\">Invia</button>"
