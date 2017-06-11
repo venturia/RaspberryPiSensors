@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import glob
+import os.path
 import gviz_api
 import datetime
 import cgi
@@ -13,7 +13,9 @@ def logfilelist(logtemplatelist,starttime,endtime):
       time=starttime
       oneday=datetime.timedelta(days=1)
       while time.date()<=endtime.date():
-         filelist.extend(glob.glob("/home/pi/"+logtemplate+time.strftime("%Y-%m-%d")+".out"))
+         filecandidate = "/home/pi/"+logtemplate+time.strftime("%Y-%m-%d")+".out"
+         if os.path.isfile(filecandidate):
+           filelist.append(filecandidate)
          time = time+oneday
       filelists.append(filelist)
 
