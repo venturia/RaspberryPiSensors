@@ -49,11 +49,13 @@
           for(var i = 0; i < checkboxes.length; i++) {
              if(checkboxes[i].checked) {sensors += "&"+checkboxes[i].value;}
           }
-          var container = document.getElementById('sensordata'+id+'_div');
-          var visualization = new google.visualization.ScatterChart(container);
-          var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime'+id).value+"&endtime="+document.getElementById('endtime'+id).value);
-          var queryWrapper = new google.visualization.QueryWrapper(query,visualization,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400},container);
-          queryWrapper.sendAndDraw();
+          if( sensors != "") { 
+            var container = document.getElementById('sensordata'+id+'_div');
+            var visualization = new google.visualization.ScatterChart(container);
+            var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime'+id).value+"&endtime="+document.getElementById('endtime'+id).value);
+            var queryWrapper = new google.visualization.QueryWrapper(query,visualization,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400},container);
+            queryWrapper.sendAndDraw();
+          }
       }
       function timerange(id) {
          var timenow= new Date();
