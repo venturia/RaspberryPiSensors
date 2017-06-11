@@ -59,3 +59,13 @@ then
   fi 
   ln -v -s temperature_${1}_params.php ${WEBDIR}/temperature/temperature_params.php
 fi
+
+if [ -e "${CGIDIR}/temperature/sensorlistdata_${1}.py" ]
+then
+  echo "creating logical link sensorlistdata.py to sensorlistdata_${1}.py"
+  if [ -e "${CGIDIR}/temperature/sensorlistdata.py" ] 
+  then
+    rm -v ${CGIDIR}/temperature/sensorlistdata.py
+  fi 
+  ln -v -s sensorlistdata_${1}.py ${CGIDIR}/temperature/sensorlistdata.py
+fi
