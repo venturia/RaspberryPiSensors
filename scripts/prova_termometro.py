@@ -17,7 +17,7 @@ address = 0x4b # I2C address of DS1621
 # Handle the command line arguments
 def decodetemp(address,command):
    datablock = bus.read_i2c_block_data(address,command)
-   temp = datablock[0]+0.5*datablock[1]/128
+   temp = datablock[0]-256.*(datablock[0]/128)+0.5*datablock[1]/128
    return temp
 
 def printtemp(address):
@@ -31,7 +31,7 @@ def printtemp(address):
    datatemp = bus.read_byte_data(address,0xaa)
    counter = bus.read_byte_data(address,0xa8)
    slope = bus.read_byte_data(address,0xa9)
-   temp2 = datatemp-0.25+1.*(slope-counter)/slope
+   temp2 = datatemp-256.*(datatemp/128)-0.25+1.*(slope-counter)/slope
    print datetime.datetime.now(), " Indirizzo I2C ", hex(address), " Temperatura ",temp, temp2, " C"
    
 def printconfig(address):
