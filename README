@@ -40,8 +40,8 @@ Richiede l'installazione del pacchetto `https://github.com/google/google-visuali
 
  librerie python per sensori
 
-   SHT15: https://pypi.python.org/pypi/rpiSht1x
-          da decomprimere nella home directory e poi eseguire "sudo python setup.py install"
+   SHT15: git clone https://bitbucket.org/lunobili/rpisht1x.git
+          eseguire "sudo python setup.py install" nella directory src
 
    BMP085: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
           da scaricare nella directory /home/pi . DA MIGLIORARE L"INSTALLAZIONE
