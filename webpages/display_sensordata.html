@@ -82,9 +82,13 @@
           }
           if( sensors != "") { 
             var container = document.getElementById('sensordata'+id+'_div');
+            container.innerHTML = "Preparing the chart";
             var visualization = new google.visualization.ScatterChart(container);
+            container.innerHTML = "Preparing the query";
             var query = new google.visualization.Query(window.location.origin+"/cgi-bin/temperature/sensordata.py?"+sensors+"&starttime="+document.getElementById('starttime'+id).value+"&endtime="+document.getElementById('endtime'+id).value);
+            container.innerHTML = "Preparing the query wrapper";
             var queryWrapper = new google.visualization.QueryWrapper(query,visualization,{legend:"Sensori",'pointSize':0.01,'lineWidth':0,'hAxis':{'format':'HH.mm dd/MM'},'width':700,'height':400},container);
+            container.innerHTML = "Sending the query";
             queryWrapper.sendAndDraw();
           }
       }
