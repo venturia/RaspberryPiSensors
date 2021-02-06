@@ -33,7 +33,7 @@ echo "copying py files"
 cp -v webpages/*.py ${CGIDIR}/temperature/.
 chmod -v +x ${CGIDIR}/temperature/*.py
 
-# define the logical links of index.php and temperature_params.php
+# define the logical links of index.php and temperature_params.php pressure_params.php
 
 if [ -e "${WEBDIR}/temperature/index_${1}.php" ]
 then
@@ -63,6 +63,16 @@ then
     rm -v ${WEBDIR}/temperature/temperature_params.php
   fi 
   ln -v -s temperature_${1}_params.php ${WEBDIR}/temperature/temperature_params.php
+fi
+
+if [ -e "${WEBDIR}/temperature/pressure_${1}_params.php" ]
+then
+  echo "creating logical link pressure_params.php to pressure_${1}_params.php"
+  if [ -e "${WEBDIR}/temperature/pressure_params.php" ] 
+  then
+    rm -v ${WEBDIR}/temperature/pressure_params.php
+  fi 
+  ln -v -s pressure_${1}_params.php ${WEBDIR}/temperature/pressure_params.php
 fi
 
 if [ -e "${CGIDIR}/temperature/sensorlistdata_${1}.py" ]
