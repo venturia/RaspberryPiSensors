@@ -30,8 +30,8 @@ load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addre
 require('dewpoint_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
-//require('pressure_params.php');
-//load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
+require('pressure_params.php');
+load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
 
 require('humidity_params.php');
 load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addressindex,$tempindex,$offset,$addresses,$labels,$plottitle,$plotwidth,$plotheight,$npastdays[$suffix]);
@@ -48,7 +48,7 @@ load_chart_data_from_file($suffix,$logfiletemplates,$dateindex,$timeindex,$addre
     <form action="<?php echo $phpfilename?>" method="get">
 
     <?php print_chart_div("temperature",$plotwidth,$plotheight,$npastdays['temperature']); ?>
-    <?php /* print_chart_div("pressure",$plotwidth,$plotheight,$npastdays['pressure']); */ ?> 
+    <?php print_chart_div("pressure",$plotwidth,$plotheight,$npastdays['pressure']); ?> 
     <?php print_chart_div("humidity",$plotwidth,$plotheight,$npastdays['humidity']); ?>
     <?php print_chart_div("dewpoint",$plotwidth,$plotheight,$npastdays['dewpoint']); ?>
     <?php print_chart_div("cputemp",$plotwidth,$plotheight,$npastdays['cputemp']); ?>
