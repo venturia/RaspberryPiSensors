@@ -16,6 +16,7 @@ Inserire con:
 1,6,11,16,21,26,31,36,41,46,51,56 * * * * /home/pi/RaspberryPiSensors/scripts/DS18b20_read.sh >> log_DS18b20_$(date +"\%F").out 2>&1
 * * * * * /home/pi/RaspberryPiSensors/scripts/myatod.py >> log_sct13_$(date +"\%F").out 2>&1
 2,7,12,17,22,27,32,37,42,47,52,57 * * * * /home/pi/RaspberryPiSensors/scripts/pibits_bmp280.py >> /home/pi/log_bmp280_$(date +"\%F").out 2>&1
+2,7,12,17,22,27,32,37,42,47,52,57 * * * * /home/pi/RaspberryPiSensors/scripts/pibits_bme280.py >> /home/pi/log_bme280_$(date +"\%F").out 2>&1
 
  e con:
 
