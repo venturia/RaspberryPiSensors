@@ -5,5 +5,5 @@
 [color]
 	ui = true
 [alias]
-	l = log --graph --all --abbrev-commit --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(green)%ar %C(yellow)%an%C(bold yellow)%d%C(reset)%n %C(white)%s%n'
+	l = log --graph --all --abbrev-commit --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(green)%ar %C(bold yellow)%an%C(bold red)%d%C(reset)%n %C(Cyan)%s%n'
 
