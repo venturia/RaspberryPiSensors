@@ -69,11 +69,14 @@ if dig_H6 > 127 :
 
 
 # BMP280 address, 0x76(118)
-# Select Control measurement register, 0xF4(244)
+# Select Control measurement register, 0xF4(244) and 0xF2
 # 0x27(39) Pressure and Temperature Oversampling rate = 1
+# 0x01(1) Humidity Oversampling rate = 1
 # Normal mode
 #bus.write_byte_data(0x76, 0xF4, 0x27)
+bus.write_byte_data(0x76, 0xF2, 0x01) #always before command below
 bus.write_byte_data(0x76, 0xF4, 0x27)
+#
 # BMP280 address, 0x76(118)
 # Select Configuration register, 0xF5(245)
 # 0xA0(00) Stand_by time = 1000 ms
